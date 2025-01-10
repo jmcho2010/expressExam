@@ -80,5 +80,5 @@ app.post('/del', todo.del);
 //서버실행
 // get 메서드는 set한 정보를 가져오는것 또한 가능.
 http.createServer(app).listen(app.get('port'), function(){
-    console.log(`${app.get(port)} 번의 서버가 시작됐습니다.`);
+    console.log(`${port} 번의 서버가 시작됐습니다.`);
 })
