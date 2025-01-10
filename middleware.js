@@ -5,13 +5,20 @@ const app = express();
 app.set('port', process.env.PORT || 3001);
 
 /* 공통으로 사용할 미들웨어를 생성*/ 
-app.use((req, res, next) =>{
+app.use((err, req, res, next) =>{
 
-    req.test = 'test';
+    // use에서 공통으로 에러처리.
+    try {
+        req.test = 'test';
+    } catch (error) {
+        res.status(500).send(err.message);
+        next();
+    }
+    
     // next : 다음 미들웨어로 넘어가는 함수
     //  - next가 없으면 다음 미들웨어 실행 불가 
     // next는 express에 내장되어있는 메서드.
-
+    
     next();
 })
 
