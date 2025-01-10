@@ -13,6 +13,7 @@
 
 let express = require('express'),
     routes = require('./routes'),
+    todo = require('./routes/todo'),
     http = require('http'),
     path = require('path');
 
@@ -33,6 +34,10 @@ app.configure(function(){
     app.use(express.bodyParser()); // 요청한 본문 내용 파싱
     app.use(express.methodOverride()); // 구식 브라우저 메서드 지원
     app.use(app.router);// 라우팅.
+
+    // 정적 리소스 처리 설정(html, css, js + 각종 미디어 파일들)
+    app.use(require('stylus').middleware(__dirname + '/public'));
+    app.use(express.static(path.join(__dirname, 'public')));
 });
 
 // 개발과 운영환경 설정은 다른경우가 대부분
