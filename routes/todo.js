@@ -24,16 +24,39 @@ exports.list = function(req, res){
             let list = {
                 'list' : []
             };
-
-            
+            fs.writeFile('./todo_list.json', JSON.stringify(list), function(err){
+                // todo_list.json파일 읽어오기
+                res.json(list);
+            });
         }
-
-    })
-
-
+    });
 }
 
 exports.add = function(req, res){
+
+    let todo ={
+        'contents': '',
+        'complete': false
+    };
+    // 요청받은 내용
+    //  -> 사용자가 입력한 내용을 받아 todo객체의 contents 프로퍼티에 저장.
+    todo.contents = req.body.contents;
+
+    // json 파일에 내용 추가시
+    // 1. json파일의 내용을 정확히 읽어온다
+    // 2. 우선 js 객체 타입으로 변경
+    // 3. 변경된 객체에 내용 추가
+    // 4. 다시 json으로 바꿔서 저장.
+    fs.readFile('./todo_list.json', {
+        'encoding' : 'utf8'
+    }, function (err, data){ // 정확히 받아오면 데이터를 가져옴
+        data = JSON.parse(data); // json -> object
+        data.list.push(todo);// todo 객체의 내용을 바뀐 json 객체에 추가.
+
+        fs.writeFile('./todo_list.json', JSON.stringify(data), function(err){
+            res.json(true);
+        });
+    });
 
 }
 
