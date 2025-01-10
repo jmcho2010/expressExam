@@ -41,3 +41,19 @@ app.configure(function(){
 app.configure('development', function(){
     app.use(express.errorHandler());
 });
+
+// get : 검색 및 페이지 방문
+// post : 개인정보 전송 및 큰 데이터 저장시 사용
+// 라우팅
+app.get('/', routes.index);
+// todo 리스트 페이지 접근
+app.get('/list', todo.list);
+app.post('/add', todo.add);
+app.post('/complete', todo.complete);
+app.post('/del', todo.del);
+
+//서버실행
+// get 메서드는 set한 정보를 가져오는것 또한 가능.
+http.createServer(app).listen(app.get('port'), function(){
+    console.log(`${app.get(port)} 번의 서버가 시작됐습니다.`);
+})
