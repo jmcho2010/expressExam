@@ -16,6 +16,28 @@ let express = require('express'),
     http = require('http'),
     path = require('path');
 
-let app = express();
-let port = 3000;
+let app = express(); // express를 사용하기 위한 앱 생성
+let port = 3000; // 포트번호 설정
+// -> json파일등을 통해 지정해두고 해당 정보를 불러오는것을 권장.
+// -> 서버관련설정들은 코드에 직접 적는거보다는 따로 만들어서 관리하는것이 일반적
 
+// 설정의 모든것을 모아두는 메서드
+app.configure(function(){
+    app.set('port', port); // 포트번호 설정완료
+    app.set('views', __dirname + '/views')// html(템플릿 / 템플릿 경로 설정)
+    app.set('view engine', 'ejs') // 템플릿엔진 설정
+    // 템플릿 엔진은 HTML에서 서버단의 코드를 인식할수있도록
+    // 도움을 주는 라이브러리 -> ex) JSP, thymeleaf
+    
+    app.use(express.logger('dev'));
+    app.use(express.bodyParser()); // 요청한 본문 내용 파싱
+    app.use(express.methodOverride()); // 구식 브라우저 메서드 지원
+    app.use(app.router);// 라우팅.
+});
+
+// 개발과 운영환경 설정은 다른경우가 대부분
+//  -> log 확인부분, 에러 메세지 처리
+// 운영이 아닌 개발 환경에서의 설정 
+app.configure('development', function(){
+    app.use(express.errorHandler());
+});
