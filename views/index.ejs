@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,7 @@
 <body>
     <h1>투두리스트</h1>
     <p>welcome to 투두리스트</p>
-    <form class="form-inline">
+    <form action="/add" method="post" class="form-inline">
         <div class="form-group">
             <input type="text" class="form-control" id="new_todo" placeholder="새로운 할 일!">
         </div>
@@ -45,4 +45,60 @@
 
 
 
+</html> -->
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo 리스트</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Todo 리스트</h1>
+        
+        <form action="/list/add" method="POST" class="todo-form">
+            <input 
+                type="text" 
+                name="content" 
+                placeholder="새로운 할 일 입력" 
+                required
+            >
+            <button type="submit">추가</button>
+        </form>
+
+        <table class="todo-table">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>할 일</th>
+                    <th>상태</th>
+                    <th>액션</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (list && list.length > 0) { %>
+                    <% list.forEach((todo, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= todo.content %></td>
+                        <td>
+                            <%= todo.completed ? '완료' : '진행중' %>
+                        </td>
+                        <td>
+                            <button>완료</button>
+                            <button>삭제</button>
+                        </td>
+                    </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="4">할 일이 없습니다.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</body>
 </html>
