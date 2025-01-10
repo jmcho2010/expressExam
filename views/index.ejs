@@ -1,13 +1,40 @@
-<!-- index.ejs
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/bootstrap.min.css">
 </head>
 <body>
-    
+    <h1><%= title %></h1>
+    <p>welcome to 투두리스트</p>
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" id="new_todo" placeholder="새로운 할 일!">
+        </div>
+        <button type="button" class="btn btn-primary">추가</button>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>내용</th>
+                <th>완료</th>
+                <th>삭제</th>
+            </tr>
+            <tr>
+                <td><%= item.key1 %></td>
+                <td><%= item.key2 %></td>
+                <td><button type="button" class="btn btn-success">완료</button></td>
+                <td><button type="button" class="btn btn-danger">완료</button></td>
+            </tr>
+        </thead>
+    </table>
+
 </body>
+<script src=""></script>
+
+
+
 </html>
