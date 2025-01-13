@@ -73,7 +73,6 @@ app.get('/', (req, res) =>{
             pw:`1234`
         }; // 실질적인 쿠키의 내용 세팅
         // -> name에 객체 타입으로 던지는게 맞음.
-        const pw = '1234'
 
         // 쿠키를 만들때에는 res.cookie를 통해 생성.
         // cookie(키, 값, 옵션형태로 사용이 가능)
@@ -91,12 +90,14 @@ app.get('/', (req, res) =>{
         //  -> 쿠키의 약점중 하나가 클라이언트 위조가 가능.
         //  -> 서명의 원리는 비밀키를 통해 만들어낸 서명을 쿠키값 뒤에 붙이는것.
         //  -> 서명이 완료된 쿠키는 req.signedCookies 에 들어감.
-        res.cookie('name', encodeURIComponent(name, pw),{
+        res.cookie('name', encodeURIComponent(name),{
             //expires:new Date(), // 이경우에는 쿠키가 즉시만료.
             maxAge:1000*60*60*24, // 24시간(쿠키 유효기간)
             httpOnly:true,
             path:'/',
             signed:true, // 서명처리
+            secure:process.env.NODE_ENV === 'prodution'
+            // 운영환경은 https로 동작.
             //gunchim:'ssak' // 여기는 말그대로 설정이기 때문에 이 코드는 의미x
 
             
