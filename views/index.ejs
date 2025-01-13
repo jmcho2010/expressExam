@@ -1,52 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>메인페이지</title>
-</head>
-<body>
-    <h1>투두리스트</h1>
-    <p>welcome to 투두리스트</p>
-    <form action="/add" method="post" class="form-inline">
-        <div class="form-group">
-            <input type="text" class="form-control" id="new_todo" placeholder="새로운 할 일!">
-        </div>
-        <button type="button" class="btn btn-primary">추가</button>
-    </form>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>내용</th>
-                <th>완료</th>
-                <th>삭제</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% if (list && list.length > 0) { %>
-                <% list.forEach((item, index) => { %>
-                    <tr>
-                        <td><%= index + 1 %></td>
-                        <td><%= item.content %></td>
-                        <td><button type="button" class="btn btn-success">완료</button></td>
-                        <td><button type="button" class="btn btn-danger">삭제</button></td>
-                    </tr>
-                <% }); %>
-            <% } else { %>
-                <tr>
-                    <td colspan="4">할 일이 없습니다.</td>
-                </tr>
-            <% } %>            
-        </tbody>
-    </table>
-
-</body>
-
-
-
-</html> -->
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -54,12 +5,11 @@
     <title>Todo 리스트</title>
     <!-- 템플릿이 이미 경로를 인지하고있기 때문에 ../static까진 안써도됨-->
     <link rel="stylesheet" href="/css/styles.css">
-</head>
+</head> 
 <body>
     <div class="container">
         <h1><%= title %></h1>
         <p>그대만의 todo list<%= title %></p>
-
 
         <form class="todo-form">
             <input type="text" class="form-control" id="new_todo"
@@ -77,27 +27,11 @@
                 </tr>
             </thead>
             <tbody id="todo-list">
-                <!-- <% if (list && list.length > 0) { %>
-                    <% list.forEach((todo, index) => { %>
-                    <tr>
-                        <td><%= index + 1 %></td>
-                        <td><%= todo.content %></td>
-                        <td>
-                            <%= todo.completed ? '완료' : '진행중' %>
-                        </td>
-                        <td>
-                            <button>완료</button>
-                            <button>삭제</button>
-                        </td>
-                    </tr>
-                    <% }); %>
-                <% } else { %>
-                    <tr>
-                        <td colspan="4">할 일이 없습니다.</td>
-                    </tr>
-                <% } %> -->
-            </tbody>
+            </tbody> 
         </table>
     </div>
+
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/todo.js"></script>
 </body>
 </html>
