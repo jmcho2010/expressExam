@@ -17,7 +17,7 @@
 //  -> 만약 이게 없으면 일일히 fs.readFile 써서 읽도록 처리.
 
 // 실전 활용 예시
-
+// 로그인한 유저는 해당 페이지를 볼수있고 아니면 안보여주는 예시
 app.use(morgan('dev');
 app.use(cookieParser(process.env.COOKIE_SECRET);
 app.use(session({
@@ -31,7 +31,7 @@ app.use(session({
     name: 'session-cookie',
 }));
 // 일부러 아래 둔다.
-app.use('/', (req, res, next) => {
+app.get('/', (req, res, next) => {
 	// 미들웨어 안에다 둔다.
     if (req.session.id) // 세션 아이디가 있다면 (로그인 상태라면)
 		express.static(path.join(__dirname, 'public'))(req, res, next); // public에서 에셋을 보여준다
