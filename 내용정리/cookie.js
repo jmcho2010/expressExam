@@ -104,8 +104,11 @@ app.get('/', (req, res) =>{
 
 
         })
+        let count =0;
         console.log("쿠키생성확인");
     }
+    count = count +1;
+    res.cookie('count', count, {signed:true});
     console.log(res.cookie); // 크게 의미 없음.
     res.send('cookie test');
 })
