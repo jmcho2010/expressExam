@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 // const morgan = require('morgan');
 // const bodyParser = require('body-parser');
-const indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index'); // 이 파일은 라우터를 설정할 파일이다.
 //const todoRoutes = require('./routes/todo');
 
 const app = express();
@@ -37,9 +37,21 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 // 라우터 설정
 app.use('/', indexRouter); // 인덱스라우터로 처리 위임.
+app.use('/test', indexRouter); // 단순 위임.
+
 //app.use('/todo', todoRoutes);// 이쪽 라우터를 타면 주소가 무조건 /todo로 시작
 // ex) list를 처리하는 코드가 있다면 그리고 주소를 /list로 세팅했다면
 //     사용자는 요청을 /todo/list로 접근해야 가능.
+
+// 그렇다면 indexRouter에 모든것을 몰아두면 편하게 처리할것같은데
+// 왜. 굳이 todoRoutes를 추가하여 복잡하게 일을 처리하는가?
+// 1. 라우팅 로직의 모듈화
+// 2. 코드 가독성, 유지보수성 향상
+// 3. 응집도 결합도 이슈.(기능별 라우트 독립적 관리)
+// 4. 관심사 분리의 원칙 적용
+//    -> 처리영역은 업무별로 분리하는것이 제일 좋음.
+
+
 
 // 지금 프로젝트는 주소 자체는 간단히 처리하고 싶기떄문에
 // 직접 라우팅을 설정하는 방법으로 진행.

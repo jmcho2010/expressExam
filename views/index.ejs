@@ -52,20 +52,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Todo 리스트</title>
+    <!-- 템플릿이 이미 경로를 인지하고있기 때문에 ../static까진 안써도됨-->
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Todo 리스트</h1>
-        
-        <form action="/list/add" method="POST" class="todo-form">
-            <input 
-                type="text" 
-                name="content" 
-                placeholder="새로운 할 일 입력" 
-                required
-            >
-            <button type="submit">추가</button>
+        <h1><%= title %></h1>
+        <p>그대만의 todo list<%= title %></p>
+
+
+        <form class="todo-form">
+            <input type="text" class="form-control" id="new_todo"
+                placeholder="새로운 할 일 입력">
+            <button type="button" class="btn btn-primary">추가</button>
         </form>
 
         <table class="todo-table">
@@ -77,8 +76,8 @@
                     <th>액션</th>
                 </tr>
             </thead>
-            <tbody>
-                <% if (list && list.length > 0) { %>
+            <tbody id="todo-list">
+                <!-- <% if (list && list.length > 0) { %>
                     <% list.forEach((todo, index) => { %>
                     <tr>
                         <td><%= index + 1 %></td>
@@ -96,7 +95,7 @@
                     <tr>
                         <td colspan="4">할 일이 없습니다.</td>
                     </tr>
-                <% } %>
+                <% } %> -->
             </tbody>
         </table>
     </div>
