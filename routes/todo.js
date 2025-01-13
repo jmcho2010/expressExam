@@ -9,6 +9,7 @@ const path = require('path');// db로 직접 연결하지 않기때문에 우선
 const TODO_FILE_PATH = path.join(__dirname, 'todo_list.json');
 
 // 파일읽기 헬퍼함수.
+// 여기는 추후 DB에 요청하는 함수로 둘수도 있다.
 async function readTodoFile(){
     try { // DB나, 파일로딩들은 반드시 예외처리를 추가할것
         // todo가 저장된 파일을 비동기로 읽어들임.
@@ -34,6 +35,44 @@ exports.list = async(req, res) =>{
         res.json(todoList); // 받아온 todoList의 내용을 응답의 결과로 리턴.
     } catch (error) {
         res.status(500).json({error:'목록 조회 실패'});
+    }
+
+};
+
+// 추가
+// 이번에는 요청으로부터 받아오는게있는가?
+// 그럼 무엇을 받아오는가?
+exports.add = async(req, res) =>{
+
+    try {
+
+
+
+        const {contents} = req.body; // 사용자가 저장한 내용을 받아옴
+
+        if(!contents){// 받아온게 없다면(사용자가 입력을 안했다면.)
+            return res.status(400).json({error: '내용 입력 바람.'})
+        }
+
+        const todoList = await readTodoFile(); // 기존 목록에 추가할거니
+                                                // 당연히 기존정보 필요.
+                                              // DB로 연결하면 필요x
+        
+        // 요청데이터를 잘 받아오는것도 중요하지만
+        // 받아온 요청데이터를 어떻게 처리하는가도 굉장히 중요.
+        // 또한 받아온 데이터를 잘 검증하는것또한 너무 중요.
+           const newTodo = {
+            id : Date.now(),
+            contents, 
+            complete: false,
+            createdAt : new Date()
+        };
+
+        todoList.list.push(newTodo);
+        await fs.writeFile(TODO_FILE_PATH, JSON.stringify(todoList), 'utf8');
+        res.status(201).json;
+    } catch (error) {
+        res.status(500).json({error:'항목 추가 실패'});
     }
 
 };
