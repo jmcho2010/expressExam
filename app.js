@@ -3,7 +3,7 @@ const path = require('path');
 // const morgan = require('morgan');
 // const bodyParser = require('body-parser');
 const indexRouter = require('./routes/index'); // 이 파일은 라우터를 설정할 파일이다.
-//const todoRoutes = require('./routes/todo');
+const todoRoutes = require('./routes/todo');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,10 +13,12 @@ const PORT = process.env.PORT || 3000;
 // 이 코드를 통해 개발/ 운영환경에 대한 분기설정이 가능
 
 // 기본설정 일부를 미리
+// 이 코드들은 요청이 들어올때마다 자동실행
 app.use(express.json()); // JSON 요청이 오면 그 본문을 파싱
 app.use(express.urlencoded({extended: true}));// URL 인코딩 데이터 파싱
 
 // 뷰 엔진 설정
+//  -> 템플릿(html / ejs) 파일들의 위치를 설정.
 app.set('views', path.join(__dirname, 'views')); // views 폴더를 바라보도록
 app.set('view engine', 'ejs');// 우리가 사용하는 템플릿 엔진이 ejs니 거기에 맞춰서...
 // 프록시 관련된 내용 설정도 가능
@@ -56,7 +58,11 @@ app.use('/test', indexRouter); // 단순 위임.
 // 지금 프로젝트는 주소 자체는 간단히 처리하고 싶기떄문에
 // 직접 라우팅을 설정하는 방법으로 진행.
 // list는 다이렉트로 요청이 아니라 메인 접근시 같이 불러오도록 설정.
-// app.get('/list', (req, res) => todoRoutes.list(req, res));
+app.get('/list', (req, res) => todoRoutes.list(req, res));
+app.post('/add', (req, res) => todoRoutes.add(req, res));
+
+
+
 
 // 404처리
 // 우리가 만들지 않은 url 요청이 왔을시 처리
