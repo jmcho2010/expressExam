@@ -47,6 +47,10 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 
 const app = express();
+const secret_key = 'secretKey';
+
+app.use(cookieParser(secret_key));
+
 
 app.set('port', process.env.PORT || 3000);
 
@@ -54,18 +58,54 @@ app.use(cookieParser()); // get요청이 오면 uri변수들이 파싱되어 req
 // 쿠키를 쓸 준비 완료.
 app.get('/', (req, res) =>{
 
+    const test = req.cookies.name;
+
+    const test2 = req.signedCookies.name;
     //쿠키 읽기
-    if(req.cookies){
-        console.log(req.cookies);
+    if(test2){
+        // 쿠키값을 서버가 받으면 문자로 받게됨.
+        console.log(test2);
+        console.log(req.signedCookies.count);
     }else{
         // 쿠키 세팅
-        res.cookie('name', encodeURIComponent(name),{
-            expires:new Date(),
+        const name = {
+            name:'test1',
+            pw:`1234`
+        }; // 실질적인 쿠키의 내용 세팅
+        // -> name에 객체 타입으로 던지는게 맞음.
+        const pw = '1234'
+
+        // 쿠키를 만들때에는 res.cookie를 통해 생성.
+        // cookie(키, 값, 옵션형태로 사용이 가능)
+        // encodeURIComponent()
+        //  -> URI의 특정한 문자를 UTF-8로 인코딩해서 결과를 처리하는 메서드.
+        // 쿠키 옵션에서 쓸수 있는 프로퍼티들
+        // maxAge : 만료시간을 밀리초 단위로 설정
+        // expires : 만료 날짜를 GMT 시간으로 설정.
+        // path : 쿠키의 경로 디폴트값 "/"
+        // domain : 도메인 네임 디폴트값
+        // secure : https에서만 쿠키를 사용할수 있도록 처리.
+        // httpOnly : 웹서버를 통해서만 쿠키에 접근할수 있도록 처리.
+        // signed : 쿠키에 대한 서명 지정.(실전에서는 대부분 켜둠.)
+        //  -> 내 서버가 직접 만든 쿠키인지 아닌지를 검증하기위함.
+        //  -> 쿠키의 약점중 하나가 클라이언트 위조가 가능.
+        //  -> 서명의 원리는 비밀키를 통해 만들어낸 서명을 쿠키값 뒤에 붙이는것.
+        //  -> 서명이 완료된 쿠키는 req.signedCookies 에 들어감.
+        res.cookie('name', encodeURIComponent(name, pw),{
+            //expires:new Date(), // 이경우에는 쿠키가 즉시만료.
+            maxAge:1000*60*60*24, // 24시간(쿠키 유효기간)
             httpOnly:true,
             path:'/',
-            gunchim:'ssak'
+            signed:true, // 서명처리
+            //gunchim:'ssak' // 여기는 말그대로 설정이기 때문에 이 코드는 의미x
+
+            
+
+
         })
+        console.log("쿠키생성확인");
     }
+    console.log(res.cookie); // 크게 의미 없음.
     res.send('cookie test');
 })
 
