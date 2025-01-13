@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 
 const indexRouter = require('../routes');
-const userRouter = require('../routes/user');
+const userRouter = require('./user');
 const findRouter = require('../routes/find');
 
 app.set('port', process.env.PORT || 3000);
