@@ -60,7 +60,7 @@ app.use('/test', indexRouter); // 단순 위임.
 // list는 다이렉트로 요청이 아니라 메인 접근시 같이 불러오도록 설정.
 app.get('/list', (req, res) => todoRoutes.list(req, res));
 app.post('/add', (req, res) => todoRoutes.add(req, res));
-
+app.post('/complete', (req, res) => todoRoutes.complete(req, res));
 
 
 

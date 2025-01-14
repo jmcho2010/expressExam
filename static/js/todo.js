@@ -52,9 +52,10 @@ document.addEventListener('DOMContentLoaded', () =>{
 
         // 완료/삭제 버튼 이벤트 리스너
         tbody.addEventListener('click', async(event) =>{
-            const target = event.target;
+            const target = event.target; // 사용자가 선택한 버튼의 정보를 가져오기위해
             const id = Number(target.dataset.id); // 특정한 내용만 선택하기 위해
 
+            // 완료버튼 선택했는지 확인
             if(target.classList.contains('complete-btn')){
                 await completeTodo(id);
             }
@@ -94,9 +95,27 @@ document.addEventListener('DOMContentLoaded', () =>{
         }
     }
 
-
+    // 완료함수
     async function completeTodo(id){
+        // id 파라미터는 왜 받아온거지?
+        //  -> 버튼이 1개가 아니니깐
+        try{
+            const response = await fetch('/complete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id })
+            });
 
+            if(response.ok){
+                fetchTodoList();
+            }
+
+        } catch(error){
+            console.error('todo 완료 실패 : ', error);
+        }
+        
     }
 
 });
