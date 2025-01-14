@@ -46,8 +46,7 @@ exports.add = async(req, res) =>{
 
     try {
 
-
-
+        console.log("test1234567890");
         const {contents} = req.body; // 사용자가 저장한 내용을 받아옴
 
         if(!contents){// 받아온게 없다면(사용자가 입력을 안했다면.)
@@ -70,7 +69,7 @@ exports.add = async(req, res) =>{
 
         todoList.list.push(newTodo);
         await fs.writeFile(TODO_FILE_PATH, JSON.stringify(todoList), 'utf8');
-        res.status(201).json;
+        res.status(201).json(newTodo);
     } catch (error) {
         res.status(500).json({error:'항목 추가 실패'});
     }

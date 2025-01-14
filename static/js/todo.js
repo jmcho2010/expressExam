@@ -66,10 +66,32 @@ document.addEventListener('DOMContentLoaded', () =>{
     // 조별로 addTodo 메서드 완성해보기
     // 1. 데이터가 정상적으로 추가되는지.
     // 2. 추가한 데이터를 바로 볼수 있는지.
-    async function addTodo(){
-        // /add로의 요청.
+    async function addTodo() {
+        const todoInput = document.getElementById('new_todo');
+        const contents = todoInput.value.trim();
 
-        // add처리후 응답을 어떻게 표현할것인가.
+        if (!contents) {
+            alert('할 일을 입력해주세요.');
+            return;
+        }
+
+        try {
+            const response = await fetch('/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ contents })
+            });
+            // 응답 받아온 결과를 화면에 어떻게 보여줄것인가를 구현
+            if (response.ok) {
+                alert("성공!");
+                todoInput.value = '';
+                fetchTodoList();
+            }
+        } catch (error) {
+            console.error('Todo 추가 실패:', error);
+        }
     }
 
 
