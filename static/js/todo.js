@@ -1,6 +1,13 @@
 document.addEventListener('DOMContentLoaded', () =>{
 
-    
+    // 초기 목록 불러오기
+    fetchTodoList();
+
+    // 추가버튼 이벤트
+    const addButton = document.querySelector('.btn-primary');
+    addButton.addEventListener('click', addTodo);
+
+
     // 목록 불러오기 함수
     async function fetchTodoList(){
         // 그렇다면 저쪽으로 어떻게 연결할건데?
@@ -56,8 +63,18 @@ document.addEventListener('DOMContentLoaded', () =>{
 
     }
 
+    // 조별로 addTodo 메서드 완성해보기
+    // 1. 데이터가 정상적으로 추가되는지.
+    // 2. 추가한 데이터를 바로 볼수 있는지.
+    async function addTodo(){
+        // /add로의 요청.
+
+        // add처리후 응답을 어떻게 표현할것인가.
+    }
+
+
     async function completeTodo(id){
-        
+
     }
 
 });
