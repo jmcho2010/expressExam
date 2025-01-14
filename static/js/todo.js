@@ -58,6 +58,8 @@ document.addEventListener('DOMContentLoaded', () =>{
             // 완료버튼 선택했는지 확인
             if(target.classList.contains('complete-btn')){
                 await completeTodo(id);
+            }else if(target.classList.contains('delete-btn')){
+                await deleteTodo(id);
             }
 
         });
@@ -114,6 +116,33 @@ document.addEventListener('DOMContentLoaded', () =>{
 
         } catch(error){
             console.error('todo 완료 실패 : ', error);
+        }
+        
+    }
+
+    // 조별 미션
+    // delete 구현
+    // app.js에 라우팅추가
+    // 클라이언트 todo.js에 deleteTodo 함수 추가
+    // 라우터에 /del 요청 들어왔을시 처리할 코드 추가
+    async function deleteTodo(id){
+        // id 파라미터는 왜 받아온거지?
+        //  -> 버튼이 1개가 아니니깐
+        try{
+            const response = await fetch('/del', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id })
+            });
+
+            if(response.ok){
+                fetchTodoList();
+            }
+
+        } catch(error){
+            console.error('todo 삭제 실패 : ', error);
         }
         
     }

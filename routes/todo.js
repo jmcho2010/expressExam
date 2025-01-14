@@ -107,3 +107,41 @@ exports.complete = async(req, res) =>{
     }
 
 };
+
+//삭제
+
+exports.del = async(req, res) =>{
+
+    try {
+        
+        const { id } = req.body;
+        // db요청 대신
+        // 컴퓨터(서버)입장에서는 어떤 데이터를 어떻게 접근해야하는지
+        // 전혀 알수 없기때문에 해당 데이터가 필요.
+        const todoList = await readTodoFile();
+
+        // ui(클라이언트)에서 넘긴 id 값과 일치하는 내용을 변수에 저장
+        //  -> id값으로 특정 todo리스트 항목 찾기.
+        const todoIndex = todoList.list.findIndex(todo => todo.id === id);
+
+        // 제대로 값 못받아온거.(혹은 없는거)
+        // 동시접속(a유저가 이미 완료눌렀는데 b유저가 다시 같은항목에 완료를 눌렀다면?)
+        if(todoIndex === -1){
+            return res.status(404).json({error : '해당 todo 없어용'});
+        }
+
+        // 해당 목록에서 삭제하는 방법이 무엇인지
+        // 1. 기존 json에 저장된 내용 삭제하기
+        // 2. 데이터 불러오고 그것만 지운후에 해당 내용만 전달.
+
+        todoList.list.splice(todoIndex, 1);
+
+        await fs.writeFile(TODO_FILE_PATH, JSON.stringify(todoList), 'utf8');
+        res.status(200).json({message : '삭제성공'});
+
+    } catch (error) {
+        res.status(500).json({error:'삭제실패'});
+    }
+
+
+};

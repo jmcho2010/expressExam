@@ -61,7 +61,7 @@ app.use('/test', indexRouter); // 단순 위임.
 app.get('/list', (req, res) => todoRoutes.list(req, res));
 app.post('/add', (req, res) => todoRoutes.add(req, res));
 app.post('/complete', (req, res) => todoRoutes.complete(req, res));
-
+app.post('/del', (req, res) => todoRoutes.del(req, res));
 
 
 // 404처리
